@@ -10,6 +10,7 @@ const myfun = async () => {
         "0xc4d17bdea567268b50cb24c783ccafc678d468a0cfce0afb84313b163cb403ef",
     });
     console.log(coins);
+    console.log("get sui coins : ", coins);
 
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = getInput("who-to-greet");
