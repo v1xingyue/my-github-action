@@ -20,7 +20,9 @@ const myfun = async () => {
     const address = keypair.getPublicKey().toSuiAddress();
     console.log(`sui caller address : ${address}`);
 
-    const balance = await client.getBalance(address);
+    const balance = await client.getBalance({
+      owner: address,
+    });
     console.log(`sui caller balance : ${balance}`);
 
     const time = new Date().toTimeString();
