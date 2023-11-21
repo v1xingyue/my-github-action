@@ -5,6 +5,10 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  sui-wallet-key:  # key of sui wallet (keep this in your github secret)
+    description: 'key of sui wallet'
+    required: true
+    default: 'xxx'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
