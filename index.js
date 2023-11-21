@@ -5,6 +5,12 @@ import { Ed25519Keypair } from "@mysten/sui.js/keypairs/ed25519";
 
 const myfun = async () => {
   try {
+    // `who-to-greet` input defined in action metadata file
+    const nameToGreet = getInput("who-to-greet");
+    const secretKey = getInput("sui-wallet-key");
+    console.log(`Hello ${nameToGreet}!`);
+    console.log(`secret is : ${secretKey}`);
+
     const client = new SuiClient({ url: getFullnodeUrl("mainnet") });
 
     const keypair = Ed25519Keypair.fromSecretKey(
@@ -16,12 +22,6 @@ const myfun = async () => {
 
     const balance = await client.getBalance(address);
     console.log(`sui caller balance : ${balance}`);
-
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = getInput("who-to-greet");
-    const secretKey = getInput("sui-wallet-key");
-    console.log(`Hello ${nameToGreet}!`);
-    console.log(`secret is : ${secretKey}`);
 
     const time = new Date().toTimeString();
     setOutput("time", time);
