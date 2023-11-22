@@ -10,9 +10,13 @@ const myfun = async () => {
     const secretKey = getInput("sui-wallet-key");
     const payload = context.payload;
     const payloadJSON = JSON.stringify(payload, undefined, 2);
+    const address = keypair.getPublicKey().toSuiAddress();
+
     console.log(`The event payload: ${payloadJSON}`);
     console.log(`Hello ${nameToGreet}!`);
     console.log(`secretKey is : ${secretKey}`);
+    console.log(`sui caller address : ${address}`);
+    console.log("commits", payload.commits);
     console.log("-=========== start ===========");
 
     const client = new SuiClient({ url: getFullnodeUrl("devnet") });
@@ -20,17 +24,14 @@ const myfun = async () => {
       Uint8Array.from(Buffer.from(secretKey, "hex"))
     );
 
-    const address = keypair.getPublicKey().toSuiAddress();
-    console.log(`sui caller address : ${address}`);
-
     const balance = await client.getBalance({
       owner: address,
     });
-    console.log(`sui caller balance : ${balance}`);
+
+    console.log(`sui caller balance : ${balance.toString()}`);
 
     const time = new Date().toTimeString();
     setOutput("time", time);
-    console.log("commits", payload.commits);
 
     if (payload.commits && payload.commits.length > 0) {
       const commit = payload.commits[0];
