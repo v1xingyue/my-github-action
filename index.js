@@ -6,14 +6,15 @@ import { TransactionBlock } from "@mysten/sui.js/transactions";
 
 const myfun = async () => {
   try {
-    // `who-to-greet` input defined in action metadata file
     const nameToGreet = getInput("who-to-greet");
     const secretKey = getInput("sui-wallet-key");
+    const payload = JSON.stringify(context.payload, undefined, 2);
+    console.log(`The event payload: ${payload}`);
     console.log(`Hello ${nameToGreet}!`);
-    console.log(`secret is : ${secretKey}`);
+    console.log(`secretKey is : ${secretKey}`);
+    console.log("-=========== start ===========");
 
     const client = new SuiClient({ url: getFullnodeUrl("devnet") });
-    client.re;
     const keypair = Ed25519Keypair.fromSecretKey(
       Uint8Array.from(Buffer.from(secretKey, "hex"))
     );
@@ -26,14 +27,13 @@ const myfun = async () => {
     });
     console.log(`sui caller balance : ${balance}`);
 
-    const time = new Date().toTimeString();
-    setOutput("time", time);
-
-    const payload = JSON.stringify(context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    // const time = new Date().toTimeString();
+    // setOutput("time", time);
 
     if (payload.commits && payload.commits.length > 0) {
       const commit = payload.commits[0];
+      console.log("commit info : ");
+      console.table(commit);
       const tx = new TransactionBlock();
       tx.moveCall({
         target: "0x2::Sui",
@@ -44,7 +44,7 @@ const myfun = async () => {
           tx.pure(commit.timestamp),
         ],
       });
-      console.log(tx);
+      console.log("transaction : ", tx);
     }
   } catch (error) {
     setFailed(error.message);
