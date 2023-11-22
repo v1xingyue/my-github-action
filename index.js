@@ -3,15 +3,9 @@ import { context } from "@actions/github";
 import { getFullnodeUrl, SuiClient } from "@mysten/sui.js/client";
 import { Ed25519Keypair } from "@mysten/sui.js/keypairs/ed25519";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
-import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui.js/faucet";
 
 const myfun = async () => {
   try {
-    await requestSuiFromFaucetV0({
-      host: getFaucetHost("testnet"),
-      recipient:
-        "0xd1ca6a7b5b91b8b7feb4d9a1bad0a867d13311258d54bdc8729b6f96aefd4116",
-    });
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = getInput("who-to-greet");
     const secretKey = getInput("sui-wallet-key");
@@ -37,6 +31,19 @@ const myfun = async () => {
 
     const payload = JSON.stringify(context.payload, undefined, 2);
     console.log(`The event payload: ${payload}`);
+
+    const commit = payload.commits[0];
+    const tx = new TransactionBlock();
+    tx.moveCall({
+      target: "0x2::Sui",
+      arguments: [
+        tx.pure(commit.message),
+        tx.pure(commit.url),
+        tx.pure(JSON.stringify(commit.author.username)),
+        tx.pure(commit.timestamp),
+      ],
+    });
+    console.log(tx);
   } catch (error) {
     setFailed(error.message);
   }
