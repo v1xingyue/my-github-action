@@ -4,6 +4,20 @@ import { getFullnodeUrl, SuiClient } from "@mysten/sui.js/client";
 import { Ed25519Keypair } from "@mysten/sui.js/keypairs/ed25519";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
 
+const packageAddres =
+  "0xd4628cec59b7b634895acbbfcc98b05715584a41a38fd1e3bd81113abe3ccedc";
+
+const shareTableId =
+  "0x46d17eb9439ab967a7ec8d3492ff22b1544226e930a6ce11d5ec1be182e9890d";
+
+const targetAddress = (module, name) => {
+  return `${packageAddres}::${module}::${name}`;
+};
+
+const transactionLink = (network, tx) => {
+  return `https://suiexplorer.com/txblock/${tx}?network=${network}`;
+};
+
 const myfun = async () => {
   try {
     const network = getInput("sui-network");
@@ -41,12 +55,9 @@ const myfun = async () => {
       console.table(commit);
       const txb = new TransactionBlock();
       txb.moveCall({
-        target:
-          "0xd4628cec59b7b634895acbbfcc98b05715584a41a38fd1e3bd81113abe3ccedc::commit::push_commit",
+        target: targetAddress("commit", "push_commit"),
         arguments: [
-          txb.object(
-            "0x46d17eb9439ab967a7ec8d3492ff22b1544226e930a6ce11d5ec1be182e9890d"
-          ),
+          txb.object(shareTableId),
           txb.pure(commit.url),
           txb.pure(JSON.stringify(commit.author.username)),
           txb.pure(commit.message),
@@ -61,7 +72,7 @@ const myfun = async () => {
       });
 
       console.log("transaction : ", tx);
-      setOutput("transaction", tx);
+      setOutput("transaction", transactionLink(network, tx.digest));
     }
   } catch (error) {
     console.log(error);
