@@ -6,6 +6,7 @@ import { TransactionBlock } from "@mysten/sui.js/transactions";
 
 const myfun = async () => {
   try {
+    const network = getInput("sui-network");
     const nameToGreet = getInput("who-to-greet");
     const secretKey = getInput("sui-wallet-key");
     const payload = context.payload;
@@ -22,7 +23,7 @@ const myfun = async () => {
     console.log("commits", payload.commits);
     console.log("-=========== start ===========");
 
-    const client = new SuiClient({ url: getFullnodeUrl("devnet") });
+    const client = new SuiClient({ url: getFullnodeUrl(network) });
 
     const balance = await client.getBalance({
       owner: address,

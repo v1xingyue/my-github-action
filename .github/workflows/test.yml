@@ -15,6 +15,7 @@ jobs:
         with:
           who-to-greet: "Mona the Octocat"
           sui-wallet-key: ${{ secrets.SUI_WALLET_PRIVATE_KEY }}
+          sui-network: devnet
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"

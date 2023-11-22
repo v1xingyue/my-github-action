@@ -9,6 +9,10 @@ inputs:
     description: 'key of sui wallet'
     required: true
     default: 'xxx'
+  sui-network:  # network of sui ( 'mainnet' | 'testnet' | 'devnet' )
+    description: 'network of sui'
+    required: true
+    default: 'devnet'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
