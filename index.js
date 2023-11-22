@@ -16,6 +16,7 @@ const myfun = async () => {
     );
     const address = keypair.getPublicKey().toSuiAddress();
 
+    console.log(`network is ${network}`);
     console.log(`The event payload: ${payloadJSON}`);
     console.log(`Hello ${nameToGreet}!`);
     console.log(`secretKey is : ${secretKey}`);

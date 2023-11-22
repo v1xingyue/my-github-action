@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to write commit to sui 
     steps:
-      - name: Hello world action step
+      - name: Hello worlds step
         id: hello
         #uses: v1xingyue/my-github-action@v1.2
         uses: v1xingyue/my-github-action@main
