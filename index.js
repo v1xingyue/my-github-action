@@ -32,18 +32,20 @@ const myfun = async () => {
     const payload = JSON.stringify(context.payload, undefined, 2);
     console.log(`The event payload: ${payload}`);
 
-    const commit = payload.commits[0];
-    const tx = new TransactionBlock();
-    tx.moveCall({
-      target: "0x2::Sui",
-      arguments: [
-        tx.pure(commit.message),
-        tx.pure(commit.url),
-        tx.pure(JSON.stringify(commit.author.username)),
-        tx.pure(commit.timestamp),
-      ],
-    });
-    console.log(tx);
+    if (payload.commits && payload.commits.length > 0) {
+      const commit = payload.commits[0];
+      const tx = new TransactionBlock();
+      tx.moveCall({
+        target: "0x2::Sui",
+        arguments: [
+          tx.pure(commit.message),
+          tx.pure(commit.url),
+          tx.pure(JSON.stringify(commit.author.username)),
+          tx.pure(commit.timestamp),
+        ],
+      });
+      console.log(tx);
+    }
   } catch (error) {
     setFailed(error.message);
   }
