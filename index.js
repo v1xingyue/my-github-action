@@ -34,17 +34,25 @@ const myfun = async () => {
       const commit = payload.commits[0];
       console.log("commit info : ");
       console.table(commit);
-      const tx = new TransactionBlock();
-      tx.moveCall({
-        target: "0x2::Sui",
+      const txb = new TransactionBlock();
+      txb.moveCall({
+        target:
+          "0xd4628cec59b7b634895acbbfcc98b05715584a41a38fd1e3bd81113abe3ccedc::commit::push_commit",
         arguments: [
-          tx.pure(commit.message),
-          tx.pure(commit.url),
-          tx.pure(JSON.stringify(commit.author.username)),
-          tx.pure(commit.timestamp),
+          tx.pure(
+            "0xb401770826f3553df5d8a45489c46754b5fc5dd5859b0cfd28ccbc198d6a747b"
+          ),
+          txb.pure(commit.url),
+          txb.pure(JSON.stringify(commit.author.username)),
+          txb.pure(commit.message),
+          txb.pure(commit.timestamp),
         ],
       });
       console.log("transaction : ", tx);
+      client.signAndExecuteTransactionBlock({
+        signer: keypair,
+        transactionBlock: txb,
+      });
     }
   } catch (error) {
     setFailed(error.message);
