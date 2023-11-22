@@ -58,6 +58,7 @@ const myfun = async () => {
       });
 
       console.log("transaction : ", tx);
+      setOutput("transaction", tx);
     }
   } catch (error) {
     console.log(error);

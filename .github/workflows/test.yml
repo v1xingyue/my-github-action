@@ -1,20 +1,22 @@
-name: test github action 
+name: write to sui test
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  hello_world_job:
+  hello_world_sui:
     runs-on: ubuntu-latest
-    name: A job to say hello to sui 
+    name: A job to write commit to sui 
     steps:
       - name: Hello world action step
         id: hello
         #uses: v1xingyue/my-github-action@v1.2
         uses: v1xingyue/my-github-action@main
         with:
-          who-to-greet: 'Mona the Octocat'
+          who-to-greet: "Mona the Octocat"
           sui-wallet-key: ${{ secrets.SUI_WALLET_PRIVATE_KEY }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - name: Get the transaction 
+        run: echo "The time was ${{ steps.hello.outputs.transaction }}"
