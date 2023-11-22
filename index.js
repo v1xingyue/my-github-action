@@ -48,13 +48,17 @@ const myfun = async () => {
           txb.pure(commit.timestamp),
         ],
       });
-      console.log("transaction : ", tx);
-      client.signAndExecuteTransactionBlock({
+      console.log("begin transaction=====", txb);
+
+      const tx = await client.signAndExecuteTransactionBlock({
         signer: keypair,
         transactionBlock: txb,
       });
+
+      console.log("transaction : ", tx);
     }
   } catch (error) {
+    console.log(error);
     setFailed(error.message);
   }
 };
