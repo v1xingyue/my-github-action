@@ -27,8 +27,8 @@ const myfun = async () => {
     });
     console.log(`sui caller balance : ${balance}`);
 
-    // const time = new Date().toTimeString();
-    // setOutput("time", time);
+    const time = new Date().toTimeString();
+    setOutput("time", time);
 
     if (payload.commits && payload.commits.length > 0) {
       const commit = payload.commits[0];
