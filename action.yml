@@ -1,10 +1,6 @@
 name: 'Hello Sui World'
 description: 'Say Hello world to sui'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   sui-wallet-key:  # key of sui wallet (keep this in your github secret)
     description: 'key of sui wallet'
     required: true

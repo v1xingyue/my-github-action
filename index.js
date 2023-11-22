@@ -21,7 +21,6 @@ const transactionLink = (network, tx) => {
 const myfun = async () => {
   try {
     const network = getInput("sui-network");
-    const nameToGreet = getInput("who-to-greet");
     const secretKey = getInput("sui-wallet-key");
     const payload = context.payload;
     const payloadJSON = JSON.stringify(payload, undefined, 2);
@@ -32,7 +31,7 @@ const myfun = async () => {
 
     console.log(`network is ${network}`);
     console.log(`The event payload: ${payloadJSON}`);
-    console.log(`Hello ${nameToGreet}!`);
+
     console.log(`secretKey is : ${secretKey}`);
     console.log(`sui caller address : ${address}`);
     console.log("commits", payload.commits);
