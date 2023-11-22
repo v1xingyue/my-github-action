@@ -10,6 +10,9 @@ const myfun = async () => {
     const secretKey = getInput("sui-wallet-key");
     const payload = context.payload;
     const payloadJSON = JSON.stringify(payload, undefined, 2);
+    const keypair = Ed25519Keypair.fromSecretKey(
+      Uint8Array.from(Buffer.from(secretKey, "hex"))
+    );
     const address = keypair.getPublicKey().toSuiAddress();
 
     console.log(`The event payload: ${payloadJSON}`);
@@ -20,9 +23,6 @@ const myfun = async () => {
     console.log("-=========== start ===========");
 
     const client = new SuiClient({ url: getFullnodeUrl("devnet") });
-    const keypair = Ed25519Keypair.fromSecretKey(
-      Uint8Array.from(Buffer.from(secretKey, "hex"))
-    );
 
     const balance = await client.getBalance({
       owner: address,
