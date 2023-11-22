@@ -8,8 +8,9 @@ const myfun = async () => {
   try {
     const nameToGreet = getInput("who-to-greet");
     const secretKey = getInput("sui-wallet-key");
-    const payload = JSON.stringify(context.payload, undefined, 2);
-    console.log(`The event payload: ${payload}`);
+    const payload = context.payload;
+    const payloadJSON = JSON.stringify(payload, undefined, 2);
+    console.log(`The event payload: ${payloadJSON}`);
     console.log(`Hello ${nameToGreet}!`);
     console.log(`secretKey is : ${secretKey}`);
     console.log("-=========== start ===========");
