@@ -29,6 +29,7 @@ const myfun = async () => {
 
     const time = new Date().toTimeString();
     setOutput("time", time);
+    console.log("commits", payload.commits);
 
     if (payload.commits && payload.commits.length > 0) {
       const commit = payload.commits[0];
