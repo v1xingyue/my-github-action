@@ -41,7 +41,7 @@ const myfun = async () => {
         target:
           "0xd4628cec59b7b634895acbbfcc98b05715584a41a38fd1e3bd81113abe3ccedc::commit::push_commit",
         arguments: [
-          tx.pure(
+          txb.pure(
             "0xb401770826f3553df5d8a45489c46754b5fc5dd5859b0cfd28ccbc198d6a747b"
           ),
           txb.pure(commit.url),
