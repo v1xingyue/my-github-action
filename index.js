@@ -42,7 +42,7 @@ const myfun = async () => {
           "0xd4628cec59b7b634895acbbfcc98b05715584a41a38fd1e3bd81113abe3ccedc::commit::push_commit",
         arguments: [
           txb.object(
-            "0xb401770826f3553df5d8a45489c46754b5fc5dd5859b0cfd28ccbc198d6a747b"
+            "0x46d17eb9439ab967a7ec8d3492ff22b1544226e930a6ce11d5ec1be182e9890d"
           ),
           txb.pure(commit.url),
           txb.pure(JSON.stringify(commit.author.username)),
