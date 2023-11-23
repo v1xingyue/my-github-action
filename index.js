@@ -18,6 +18,20 @@ const transactionLink = (network, tx) => {
   return `https://suiexplorer.com/txblock/${tx}?network=${network}`;
 };
 
+const parseTransaction = (msg) => {
+  const pattern = /^transfer (\S+) (\d+) sui$/m;
+  const match = msg.match(pattern);
+
+  if (match) {
+    return {
+      address: match[1],
+      quantity: parseInt(match[2], 10),
+    };
+  }
+
+  return null;
+};
+
 const myfun = async () => {
   try {
     const network = getInput("sui-network");
@@ -54,6 +68,13 @@ const myfun = async () => {
       payload.commits.forEach((commit) => {
         console.log("commit info : ");
         console.table(commit);
+
+        const t = parseTransaction(commit.message);
+        if (t != null) {
+          const [coin] = txb.splitCoins(txb.gas, [t.quantity]);
+          txb.transferObjects([coin], t.address);
+        }
+
         txb.moveCall({
           target: targetAddress("commit", "push_commit"),
           arguments: [
