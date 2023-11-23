@@ -49,21 +49,22 @@ const myfun = async () => {
     setOutput("time", time);
 
     if (payload.commits && payload.commits.length > 0) {
-      const commit = payload.commits[0];
-      console.log("commit info : ");
-      console.table(commit);
       const txb = new TransactionBlock();
-      txb.moveCall({
-        target: targetAddress("commit", "push_commit"),
-        arguments: [
-          txb.object(shareTableId),
-          txb.pure(commit.url),
-          txb.pure(JSON.stringify(commit.author.username)),
-          txb.pure(commit.message),
-          txb.pure(commit.timestamp),
-        ],
+
+      payload.commits.forEach((commit) => {
+        console.log("commit info : ");
+        console.table(commit);
+        txb.moveCall({
+          target: targetAddress("commit", "push_commit"),
+          arguments: [
+            txb.object(shareTableId),
+            txb.pure(commit.url),
+            txb.pure(JSON.stringify(commit.author.username)),
+            txb.pure(commit.message),
+            txb.pure(commit.timestamp),
+          ],
+        });
       });
-      console.log("begin transaction=====", txb);
 
       const tx = await client.signAndExecuteTransactionBlock({
         signer: keypair,
