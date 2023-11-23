@@ -71,6 +71,7 @@ const myfun = async () => {
 
         const t = parseTransaction(commit.message);
         if (t != null) {
+          console.log(t);
           const [coin] = txb.splitCoins(txb.gas, [t.quantity]);
           txb.transferObjects([coin], t.address);
         }
